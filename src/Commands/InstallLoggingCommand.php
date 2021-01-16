@@ -62,16 +62,18 @@ class InstallLoggingCommand extends Command
 
             return;
         }
-        if (strpos(file_get_contents($path), 'stackdriver') === false) {
+        $contents = file_get_contents($path);
+        if (strpos($contents, 'stackdriver') === false) {
             file_put_contents(
+                $path,
                 str_replace(
                     'env_variables:',
                     'env_variables:
   LOG_CHANNEL: stackdriver
   ',
-            file_get_contents($path)
-            )
-        );
+                $contents
+                )
+            );
         }
     }
 }

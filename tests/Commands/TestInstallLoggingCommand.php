@@ -13,10 +13,13 @@ class TestInstallLoggingCommand extends TestCase
      */
     public function it_records_a_successfull_command(): void
     {
-        $this->artisan('google-serverless:install:logging')->run();
+        $this->artisan('google-serverless:install:logging')
+            ->expectsConfirmation('Do you want to update the log channel in the "app.yaml" file?', 'yes')
+            ->expectsOutput('The app.yaml file doesn\'t exists, you should create it and run this command again...')
+            ->run();
 
         $this->assertArrayHasKey('stackdriver', config('logging.channels'));
-        $this->assertEquals('stackdriver', config('logging.default'));
-        $this->assertContains('Bootstrap::exceptionHandler($exception);', file_get_contents(app_path('Exceptions/Handler.php')));
+        // $this->assertContains('stackdriver', file_get_contents(base_path('app.yaml')));
+        // $this->assertContains('Bootstrap::exceptionHandler($exception);', file_get_contents(app_path('Exceptions/Handler.php')));
     }
 }
