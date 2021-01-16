@@ -17,15 +17,15 @@ class InstallLoggingCommand extends Command
         $this->info('Checking if the stackdriver is already installed...');
         $this->info('');
 
-        if ($this->isLoggingConfigUpdated() === false) {
-            $this->configureLoggingConfig();
-            if ($this->isLoggingConfigUpdated() === false) {
+        if (!$this->isLoggingConfigUpdated()) {
+            if ($this->configureLoggingConfig() === false) {
                 $this->comment('Failed to install config...');
                 $this->comment('You should update the logging config file manually...');
             }
-            if ($this->ask('Do you want to update the log channel in the "app.yaml" file?')) {
-                $this->updateAppYamlFile();
-            }
+        }
+
+        if ($this->ask('Do you want to update the log channel in the "app.yaml" file?')) {
+            $this->updateAppYamlFile();
         }
         $this->info('The driver is installed!');
     }
@@ -35,9 +35,9 @@ class InstallLoggingCommand extends Command
         return config('logging.channels.stackdriver') !== null;
     }
 
-    public function configureLoggingConfig(): void
+    public function configureLoggingConfig(): bool
     {
-        file_put_contents(
+        $bytes = file_put_contents(
             $path = config_path('logging.php'),
             str_replace(
                 "'channels' => [",
@@ -50,12 +50,19 @@ class InstallLoggingCommand extends Command
                 file_get_contents($path)
             )
         );
+
+        return $bytes !== false;
     }
 
     public function updateAppYamlFile()
     {
         $path = base_path('app.yaml');
-        if (strpos(file_get_contents($path), 'stackdriver') !== false) {
+        if (!file_exists($path)) {
+            $this->comment('The app.yaml file doesn\'t exists, you should create it and run this command again...');
+
+            return;
+        }
+        if (strpos(file_get_contents($path), 'stackdriver') === false) {
             file_put_contents(
                 str_replace(
                     'env_variables:',
