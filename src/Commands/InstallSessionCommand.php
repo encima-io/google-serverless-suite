@@ -3,6 +3,7 @@
 namespace Encima\Google\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class InstallSessionCommand extends Command
 {
@@ -21,7 +22,7 @@ class InstallSessionCommand extends Command
             if ($this->ask('Do you want to change the fallback sessions to cookies?')) {
                 file_put_contents(
                     $path,
-                    str_replace(
+                    Str::replaceFirst(
                         "'driver' => env('SESSION_DRIVER', 'file')",
                         "'driver' => env('SESSION_DRIVER', 'cookie')",
                         $contents
@@ -36,12 +37,6 @@ class InstallSessionCommand extends Command
             'firestore',
             'cookie',
         ]);
-
-        // if ($sessionDriver === 'firestore') {
-        //     if (!$this->isLoggingConfigUpdated()) {
-        //         $this->installFirestoreSessionDriver();
-        //     }
-        // }
 
         $this->updateAppYamlFile($sessionDriver);
 

@@ -3,6 +3,7 @@
 namespace Encima\Google\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use ReflectionClass;
 
 class InstallLoggingCommand extends Command
@@ -46,7 +47,7 @@ class InstallLoggingCommand extends Command
     {
         $bytes = file_put_contents(
             $path = config_path('logging.php'),
-            str_replace(
+            Str::replaceFirst(
                 "'channels' => [",
                 "'channels' => [
         'stackdriver' => [
@@ -55,7 +56,6 @@ class InstallLoggingCommand extends Command
             'level' => 'debug',
         ],",
                 file_get_contents($path),
-                1
             )
         );
 
@@ -81,11 +81,10 @@ class InstallLoggingCommand extends Command
      * Register the exception handling callbacks for the application.';
         file_put_contents(
             $path,
-            str_replace(
+            Str::replaceFirst(
                  $lookup,
                 file_get_contents(__DIR__.'/../../stubs/exception-logging.stub').$lookup,
-                $contents,
-                1
+                $contents
             )
         );
     }
