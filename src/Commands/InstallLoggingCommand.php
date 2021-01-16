@@ -76,8 +76,7 @@ class InstallLoggingCommand extends Command
         $path = $reflection->getFileName();
 
         $contents = file_get_contents($path);
-        $lookup = '
-    /**
+        $lookup = '/**
      * Register the exception handling callbacks for the application.';
         file_put_contents(
             $path,
