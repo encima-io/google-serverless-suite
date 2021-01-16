@@ -4,7 +4,7 @@ namespace Encima\Google\Tests\Commands;
 
 use Encima\Google\Tests\TestCase;
 
-class TestInstallLoggingCommand extends TestCase
+class CreateNewAppYamlFileCommandTest extends TestCase
 {
     /**
      * @test
@@ -13,7 +13,7 @@ class TestInstallLoggingCommand extends TestCase
      */
     public function it_records_a_successfull_command(): void
     {
-        $this->artisan('google-serverless:install:logging')
+        $this->artisan('google-serverless:create')
             ->expectsConfirmation('Do you want to update the log channel in the "app.yaml" file?', 'yes')
             ->expectsOutput('The app.yaml file doesn\'t exists, you should create it and run this command again...')
             ->run();

@@ -2,7 +2,6 @@
 
 namespace Encima\Google;
 
-use Encima\Google\Commands\InstallLoggingCommand;
 use Illuminate\Support\ServiceProvider;
 
 class GoogleServiceProvider extends ServiceProvider
@@ -20,7 +19,8 @@ class GoogleServiceProvider extends ServiceProvider
     protected function registerCommands(): self
     {
         $this->commands([
-            InstallLoggingCommand::class,
+            Commands\CreateNewAppYamlFileCommand::class,
+            Commands\InstallLoggingCommand::class,
         ]);
 
         return $this;

@@ -1,0 +1,24 @@
+runtime: {{RUNTIME}}
+
+env_variables:
+  APP_DEBUG: false
+  APP_ENV: production
+  APP_PACKAGES_CACHE: /tmp/bootstrap-cache-packages.php
+  APP_SERVICES_CACHE: /tmp/bootstrap-cache-services.php
+  APP_STORAGE: /tmp
+  VIEW_COMPILED_PATH: /tmp
+
+handlers:
+- url: /robots.txt
+  static_files: public/robots.txt
+  upload: public/robots.txt
+
+- url: /favicon.ico
+  static_files: public/favicon.ico
+  upload: public/favicon.ico
+
+- url: /static
+  static_dir: public/static
+
+- url: .*
+  script: auto
