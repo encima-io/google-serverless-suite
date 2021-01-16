@@ -69,8 +69,7 @@ class InstallLoggingCommand extends Command
                 str_replace(
                     'env_variables:',
                     'env_variables:
-  LOG_CHANNEL: stackdriver
-  ',
+  LOG_CHANNEL: stackdriver',
                 $contents
                 )
             );

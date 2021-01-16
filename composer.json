@@ -18,8 +18,9 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "google/cloud-logging": "^1.21",
-        "google/cloud-error-reporting": "^0.18.2"
+        "firevel/firestore-session-driver": "^1.0",
+        "google/cloud-error-reporting": "^0.18.2",
+        "google/cloud-logging": "^1.21"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
