@@ -17,6 +17,13 @@ class CreateNewAppYamlFileCommand extends Command
 
     public function handle()
     {
+        $path = base_path('php.ini');
+        if (!file_exists($path)) {
+            if ($this->ask('Do you want to activate the gRPC extension (required by Firestore)? ')) {
+                file_put_contents($path, 'extension=grpc.so');
+            }
+        }
+
         $path = base_path('app.yaml');
         if (file_exists($path)) {
             $this->comment('You already have a "app.yaml" file in your project! Aborting...');
