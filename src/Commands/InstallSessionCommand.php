@@ -37,11 +37,11 @@ class InstallSessionCommand extends Command
             'cookie',
         ]);
 
-        if ($sessionDriver === 'firestore') {
-            if (!$this->isLoggingConfigUpdated()) {
-                $this->installFirestoreSessionDriver();
-            }
-        }
+        // if ($sessionDriver === 'firestore') {
+        //     if (!$this->isLoggingConfigUpdated()) {
+        //         $this->installFirestoreSessionDriver();
+        //     }
+        // }
 
         $this->updateAppYamlFile($sessionDriver);
 
