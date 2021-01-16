@@ -21,6 +21,7 @@ class GoogleServiceProvider extends ServiceProvider
         $this->commands([
             Commands\CreateNewAppYamlFileCommand::class,
             Commands\InstallLoggingCommand::class,
+            Commands\InstallSessionCommand::class,
         ]);
 
         return $this;
