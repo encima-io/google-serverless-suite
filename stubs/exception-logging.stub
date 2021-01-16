@@ -1,0 +1,18 @@
+
+    /**
+     * Google Cloud Stackdriver Error Reporting.
+     *
+     * @param  \Throwable  $exception
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function report(Throwable $exception)
+    {
+        if (env('GAE_SERVICE')) {
+            Bootstrap::init();
+            Bootstrap::exceptionHandler($exception);
+        } else {
+            parent::report($exception);
+        }
+    }

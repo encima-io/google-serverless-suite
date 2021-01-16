@@ -24,6 +24,12 @@ class InstallLoggingCommand extends Command
             }
         }
 
+        if (!$this->isLoggingExceptions()) {
+            if ($this->ask('Do you want to log exceptions?', 'Yes')) {
+                $this->configureExcetionLogging();
+            }
+        }
+
         if ($this->ask('Do you want to update the log channel in the "app.yaml" file?')) {
             $this->updateAppYamlFile();
         }
@@ -47,11 +53,40 @@ class InstallLoggingCommand extends Command
             'via' => Encima\Google\Logging\CreateStackdriverLogger::class,
             'level' => 'debug',
         ],",
-                file_get_contents($path)
+                file_get_contents($path),
+                1
             )
         );
 
         return $bytes !== false;
+    }
+
+    public function isLoggingExceptions()
+    {
+        $reflection = new Reflection(\App\Exceptions\Handler::class);
+        $method = $reflection->getMethod('report');
+
+        return $method->class !== 'Illuminate\Foundation\Exceptions\Handler';
+    }
+
+    public function configureExcetionLogging()
+    {
+        $reflection = new Reflection(\App\Exceptions\Handler::class);
+        $path = $reflection->getFileName();
+
+        $contents = file_get_contents($path);
+        $lookup = '
+    /**
+     * Register the exception handling callbacks for the application.';
+        file_put_contents(
+            $path,
+            str_replace(
+                 $lookup,
+                file_get_contents(__DIR__.'/../../stubs/exception-logging.stub').$lookup,
+                $contents,
+                1
+            )
+        );
     }
 
     public function updateAppYamlFile()
