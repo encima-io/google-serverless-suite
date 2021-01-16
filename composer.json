@@ -1,0 +1,55 @@
+{
+    "name": "encima-io/google-serverless-suite",
+    "description": "A Laravel package that easily let's you get your serverless Laravel app up and running on Google Cloud Platform.",
+    "keywords": [
+        "encima",
+        "google",
+        "serverless",
+        "laravel"
+    ],
+    "homepage": "https://github.com/encima-io",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Einar-Johan Hansen",
+            "email": "einar@encima.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "google/cloud-logging": "^1.21",
+        "google/cloud-error-reporting": "^0.18.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Encima\\Google\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Encima\\Google\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Encima\\Google\\GoogleServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+
