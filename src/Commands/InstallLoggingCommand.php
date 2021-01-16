@@ -3,6 +3,7 @@
 namespace Encima\Google\Commands;
 
 use Illuminate\Console\Command;
+use ReflectionClass;
 
 class InstallLoggingCommand extends Command
 {
@@ -63,7 +64,7 @@ class InstallLoggingCommand extends Command
 
     public function isLoggingExceptions()
     {
-        $reflection = new Reflection(\App\Exceptions\Handler::class);
+        $reflection = new ReflectionClass(\App\Exceptions\Handler::class);
         $method = $reflection->getMethod('report');
 
         return $method->class !== 'Illuminate\Foundation\Exceptions\Handler';
@@ -71,7 +72,7 @@ class InstallLoggingCommand extends Command
 
     public function configureExcetionLogging()
     {
-        $reflection = new Reflection(\App\Exceptions\Handler::class);
+        $reflection = new ReflectionClass(\App\Exceptions\Handler::class);
         $path = $reflection->getFileName();
 
         $contents = file_get_contents($path);
